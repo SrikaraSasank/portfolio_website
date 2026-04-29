@@ -1,10 +1,10 @@
 /* --- Global Variables & Reset --- */
 :root {
-    --bg-dark: #0f172a;
-    --text-main: #f8fafc;
-    --text-muted: #cbd5e1;
-    --accent-cyan: #22d3ee;
-    --accent-purple: #c084fc;
+    --bg-dark: #0d1117;
+    --text-main: #e6edf3;
+    --text-muted: #8b949e;
+    --accent-cyan: #00e5ff; /* Tron Blue */
+    --accent-purple: #ff5500; /* Neon Orange */
     
     /* Glassmorphism */
     --glass-bg: rgba(255, 255, 255, 0.03);
@@ -12,11 +12,11 @@
     --glass-blur: blur(12px);
 
     /* Claymorphism Dark Mode */
-    --clay-bg: rgba(30, 41, 59, 0.6);
+    --clay-bg: rgba(22, 27, 34, 0.6);
     --clay-shadow: 
-        8px 8px 16px rgba(0, 0, 0, 0.3),
-        -4px -4px 12px rgba(255, 255, 255, 0.02),
-        inset -4px -4px 12px rgba(0, 0, 0, 0.4),
+        8px 8px 16px rgba(0, 0, 0, 0.6),
+        -4px -4px 12px rgba(255, 255, 255, 0.03),
+        inset -4px -4px 12px rgba(0, 0, 0, 0.7),
         inset 4px 4px 10px rgba(255, 255, 255, 0.05);
 }
 
@@ -44,12 +44,17 @@ html {
     color: var(--text-main);
 }
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     background-color: var(--bg-dark);
     /* Subtle radial gradient for depth */
-    background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 70%);
+    background-image: radial-gradient(circle at 50% 0%, #161b22 0%, #0d1117 70%);
     min-height: 100vh;
-    overflow-x: hidden;
+    position: relative;
     position: relative;
     line-height: 1.6;
 }
@@ -74,7 +79,7 @@ a, .btn, button {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     z-index: -1;
     overflow: hidden;
@@ -110,7 +115,7 @@ a, .btn, button {
 .blob-3 {
     width: 300px;
     height: 300px;
-    background: #3b82f6; /* Blueish */
+    background: #0088cc; /* Darker Tron Blue */
     top: 40%;
     left: 50%;
     animation-delay: -10s;
@@ -156,10 +161,17 @@ a, .btn, button {
     font-size: 1.8rem;
     font-weight: 800;
     letter-spacing: 1px;
+    color: var(--text-main);
+    transition: all 0.3s ease;
 }
 
 .logo span {
-    color: var(--accent-cyan);
+    color: var(--accent-purple);
+}
+
+.logo:hover {
+    text-shadow: 0 0 15px var(--accent-cyan);
+    transform: scale(1.02);
 }
 
 .nav-links {
@@ -212,19 +224,20 @@ main {
 /* Page Transition Mechanics */
 #main-content {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translate3d(0, 20px, 0);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    will-change: transform, opacity;
 }
 
 #main-content.page-enter-active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 #main-content.page-exit-active {
     opacity: 0;
-    transform: translateY(-20px) scale(0.98);
-    transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+    transform: translate3d(0, -20px, 0) scale(0.98);
+    transition: opacity 0.3s ease-in, transform 0.3s ease-in;
 }
 
 .section-header {
@@ -646,13 +659,13 @@ main {
     background-color: var(--accent-cyan);
     border-radius: 50%;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
     pointer-events: none;
-    z-index: 9999;
+    z-index: 99999;
     box-shadow: 0 0 10px var(--accent-cyan);
     transition: width 0.2s, height 0.2s;
+    will-change: transform;
 }
 
 .cursor-outline {
@@ -661,12 +674,12 @@ main {
     border: 2px solid var(--accent-purple);
     border-radius: 50%;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
     pointer-events: none;
-    z-index: 9998;
+    z-index: 99998;
     transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+    will-change: transform;
 }
 
 .cursor-hover {
@@ -688,16 +701,20 @@ main {
 }
 
 .clay-btn {
-    background: linear-gradient(135deg, var(--accent-cyan), #0284c7);
-    color: #fff;
+    background: rgba(0, 229, 255, 0.03);
+    color: var(--text-main);
     border-radius: 30px;
-    box-shadow: var(--clay-shadow);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    box-shadow: none;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-shadow: none;
 }
 
 .clay-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 10px 25px rgba(34, 211, 238, 0.5), inset -2px -2px 5px rgba(0,0,0,0.2), inset 2px 2px 8px rgba(255,255,255,0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 229, 255, 0.15);
+    background: rgba(0, 229, 255, 0.08);
+    border-color: var(--accent-cyan);
 }
 
 /* --- EXTRA ARTISTIC TOUCHES --- */
@@ -707,7 +724,7 @@ body::before {
     content: '';
     position: fixed;
     top: 0; left: 0;
-    width: 100vw; height: 100vh;
+    width: 100%; height: 100vh;
     background-image: 
         linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
@@ -746,13 +763,126 @@ body::before {
     100% { filter: blur(16px); opacity: 0.8; }
 }
 
-/* Neon Text Glows for extreme aesthetics */
-.gradient-text {
-    text-shadow: 0 0 35px rgba(34, 211, 238, 0.3), 0 0 10px rgba(192, 132, 252, 0.2);
+/* Removed gradient text shadow for crisp typography */
+
+/* --- Modal Styles --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(15px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
 }
 
-.logo span {
-    text-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
 }
 
+.modal-content {
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    transform: translateY(50px) scale(0.9);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 3rem 2rem;
+    text-align: center;
+}
 
+.modal-overlay.active .modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    cursor: none; /* Let custom cursor take over */
+    transition: color 0.3s;
+}
+
+.modal-close:hover {
+    color: var(--accent-cyan);
+}
+
+.modal-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-main);
+}
+
+.modal-desc {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-method-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    background: rgba(255,255,255,0.03);
+}
+
+.contact-method-card i {
+    font-size: 2rem;
+    color: var(--accent-cyan);
+    background: rgba(16, 185, 129, 0.1);
+    padding: 15px;
+    border-radius: 50%;
+}
+
+.method-details {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.method-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.method-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.copy-btn {
+    color: var(--accent-cyan);
+    background: rgba(0, 229, 255, 0.1) !important;
+    border: 1px solid rgba(0, 229, 255, 0.3) !important;
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+    background: var(--accent-cyan) !important;
+    color: var(--bg-dark) !important;
+    box-shadow: 0 0 15px var(--accent-cyan);
+    transform: scale(1.05);
+}
