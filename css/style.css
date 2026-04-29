@@ -886,3 +886,94 @@ body::before {
     box-shadow: 0 0 15px var(--accent-cyan);
     transform: scale(1.05);
 }
+
+/* --- Phase 1: Hero Section Additions --- */
+.fade-in-up {
+    animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.role-title {
+    font-size: 1.8rem;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.value-statement {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.hero-ctas {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* --- Phase 2: Case Study Additions --- */
+.case-study-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.case-study-section {
+    margin-bottom: 1rem;
+}
+
+.case-study-section h4 {
+    color: var(--accent-cyan);
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+}
+
+.case-study-section p {
+    margin-bottom: 0 !important;
+    font-size: 0.95rem;
+}
+
+.project-links {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+/* --- Phase 8: Light Mode Variables --- */
+body.light-mode {
+    --bg-dark: #f0f2f5;
+    --text-main: #1a1a1a;
+    --text-muted: #555555;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --clay-bg: rgba(255, 255, 255, 0.8);
+    --clay-shadow: 
+        8px 8px 16px rgba(0, 0, 0, 0.1),
+        -4px -4px 12px rgba(255, 255, 255, 0.8),
+        inset -4px -4px 12px rgba(0, 0, 0, 0.05),
+        inset 4px 4px 10px rgba(255, 255, 255, 0.5);
+    background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #f0f2f5 70%);
+}
+body.light-mode .timeline-item::after {
+    background: #ffffff;
+}
+body.light-mode::before {
+    background-image: 
+        linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+}

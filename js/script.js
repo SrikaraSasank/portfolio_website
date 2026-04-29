@@ -193,31 +193,36 @@ if(liquidOrb) {
 // Contact Modal Logic
 const contactModalHTML = `
 <div id="contact-modal" class="modal-overlay">
-    <div class="modal-content glass-panel tilt-card">
-        <button class="modal-close" id="modal-close-btn"><i class="fas fa-times"></i></button>
-        <h2 class="modal-title">Let's Connect!</h2>
-        <p class="modal-desc">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out directly.</p>
-        <div class="contact-methods">
+    <div class="modal-content glass-panel tilt-card" style="padding: 2.5rem 2rem;">
+        <button class="modal-close" id="modal-close-btn" style="position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: var(--text-main); font-size: 1.5rem; cursor: none;"><i class="fas fa-times"></i></button>
+        <h2 class="modal-title" style="margin-bottom: 0.5rem; color: var(--accent-cyan);">Let's Connect!</h2>
+        <p class="modal-desc" style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.05rem;">
+            Open to internships and collaboration opportunities.
+        </p>
+        <div class="contact-methods" style="display: flex; flex-direction: column; gap: 1rem;">
             <div class="contact-method-wrapper" style="display:flex; gap:10px;">
-                <a href="tel:+918260914488" class="contact-method-card clay-card ripple-btn" style="flex:1;">
-                    <i class="fas fa-phone-alt"></i>
-                    <div class="method-details">
-                        <span class="method-label">Call Me</span>
-                        <span class="method-value">+91 8260914488</span>
-                    </div>
-                </a>
-                <button class="copy-btn btn clay-card" data-copy="+91 8260914488" style="padding: 0 1.5rem; display:flex; align-items:center; justify-content:center; cursor: none;" title="Copy Phone Number"><i class="far fa-copy"></i></button>
-            </div>
-            <div class="contact-method-wrapper" style="display:flex; gap:10px;">
-                <a href="mailto:srikarasasankv@gmail.com" class="contact-method-card clay-card ripple-btn" style="flex:1;">
-                    <i class="fas fa-envelope"></i>
-                    <div class="method-details">
-                        <span class="method-label">Email Me</span>
-                        <span class="method-value">srikarasasankv@gmail.com</span>
+                <a href="mailto:srikarasasankv@gmail.com" class="contact-method-card clay-card ripple-btn" style="flex:1; padding: 1rem; display: flex; align-items: center; gap: 15px; text-decoration: none;">
+                    <i class="fas fa-envelope" style="font-size: 1.5rem; color: var(--accent-purple);"></i>
+                    <div class="method-details" style="text-align: left;">
+                        <span class="method-label" style="display: block; font-size: 0.85rem; color: var(--text-muted);">Email Me</span>
+                        <span class="method-value" style="color: var(--text-main); font-weight: 600;">srikarasasankv@gmail.com</span>
                     </div>
                 </a>
                 <button class="copy-btn btn clay-card" data-copy="srikarasasankv@gmail.com" style="padding: 0 1.5rem; display:flex; align-items:center; justify-content:center; cursor: none;" title="Copy Email"><i class="far fa-copy"></i></button>
             </div>
+            
+            <div class="social-links-modal" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <a href="https://www.linkedin.com/in/varanasi-sai-srikara-sasank-65281328b" target="_blank" class="clay-card ripple-btn" style="padding: 1rem; display: flex; justify-content: center; align-items: center; gap: 10px; color: var(--text-main);">
+                    <i class="fab fa-linkedin" style="color: #0077b5; font-size: 1.2rem;"></i> LinkedIn
+                </a>
+                <a href="https://github.com/SrikaraSasank" target="_blank" class="clay-card ripple-btn" style="padding: 1rem; display: flex; justify-content: center; align-items: center; gap: 10px; color: var(--text-main);">
+                    <i class="fab fa-github" style="font-size: 1.2rem;"></i> GitHub
+                </a>
+            </div>
+
+            <a href="assets/Srikara_Sasank_Resume.pdf" target="_blank" class="clay-card ripple-btn" style="padding: 1rem; background: rgba(0, 229, 255, 0.1); border-color: var(--accent-cyan); display: flex; justify-content: center; align-items: center; gap: 10px; color: var(--accent-cyan); font-weight: bold; margin-top: 0.5rem;">
+                <i class="fas fa-file-pdf"></i> View Resume
+            </a>
         </div>
     </div>
 </div>
@@ -280,4 +285,44 @@ newInteractiveElements.forEach((el) => {
             cursorOutline.classList.remove("cursor-hover");
         }
     });
+});
+
+// Dark/Light Mode Toggle
+const themeToggleHTML = `
+<button id="theme-toggle" class="btn clay-card touch-ripple" style="position: fixed; bottom: 30px; right: 30px; z-index: 1000; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: none; padding: 0;">
+    <i class="fas fa-sun" id="theme-icon" style="color: var(--accent-purple);"></i>
+</button>
+`;
+document.body.insertAdjacentHTML('beforeend', themeToggleHTML);
+
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+
+const currentTheme = localStorage.getItem('theme') || 'dark';
+if (currentTheme === 'light') {
+    document.body.classList.add('light-mode');
+    themeIcon.classList.replace('fa-sun', 'fa-moon');
+}
+
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    if (document.body.classList.contains('light-mode')) {
+        localStorage.setItem('theme', 'light');
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+    } else {
+        localStorage.setItem('theme', 'dark');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+    }
+});
+
+// Re-apply cursor hover logic for the new theme toggle
+themeToggle.addEventListener("mouseenter", () => {
+    if(typeof cursorOutline !== 'undefined' && cursorOutline) {
+        cursorOutline.classList.add("cursor-hover");
+    }
+});
+themeToggle.addEventListener("mouseleave", () => {
+    if(typeof cursorOutline !== 'undefined' && cursorOutline) {
+        cursorOutline.classList.remove("cursor-hover");
+    }
 });
